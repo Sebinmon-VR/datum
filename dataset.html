@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset — Datum</title>
+  <meta name="description" content="Dataset details: schema, sample fields, source, licence and compliance summary.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="section-sm">
+    <div class="container" id="app"></div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/datasets.js"></script>
+  <script>
+    (function () {
+      const U = window.DATUM_UTIL, I = window.DATUM_ICONS, e = U.escape;
+      const id = new URLSearchParams(location.search).get("id");
+      const ds = window.DATUM_DATASETS.find((d) => d.id === id);
+      const app = document.getElementById("app");
+
+      if (!ds) {
+        app.innerHTML = `<div class="empty"><h3>Dataset not found</h3><p class="muted">This dataset may have been renamed or retired.</p><a class="btn btn-primary mt-2" href="datasets.html">Return to catalog</a></div>`;
+        return;
+      }
+
+      document.title = `${ds.title} — Datum`;
+      const personal = {
+        none: "No personal data",
+        aggregated: "Aggregated, no individual-level data",
+        pseudonymised: "Pseudonymised, direct identifiers removed",
+        consented: "Personal data, collected with consent",
+      }[ds.personalData];
+      const requestHref = `request.html?dataset=${encodeURIComponent(ds.id)}`;
+
+      app.innerHTML = `
+        <nav class="breadcrumb"><a href="datasets.html">Datasets</a> / <a href="datasets.html?category=${encodeURIComponent(ds.category)}">${e(ds.category)}</a></nav>
+        <div class="detail">
+          <div>
+            <div class="tags mb-4">
+              <span class="tag">${e(ds.category)}</span>
+              <span class="tag tag-ok">${I.shield.replace("<svg", '<svg width="12" height="12"')} Compliance reviewed</span>
+              ${ds.frameworks.map((f) => `<span class="tag tag-accent">${e(f)}</span>`).join("")}
+            </div>
+            <h1 style="font-size:clamp(2rem,4vw,2.75rem)">${e(ds.title)}</h1>
+            <p class="lead">${e(ds.description)}</p>
+
+            <h2 class="mt-6" style="font-size:1.25rem">Overview</h2>
+            <dl class="kv mt-2">
+              <dt>Records</dt><dd>${e(ds.records)}</dd>
+              <dt>Coverage</dt><dd>${e(ds.coverage)}</dd>
+              <dt>Refresh</dt><dd>${e(ds.refresh)}</dd>
+              <dt>Formats</dt><dd>${ds.formats.map(e).join(", ")}</dd>
+              <dt>Source</dt><dd>${e(ds.source)}</dd>
+              <dt>Licence</dt><dd>${e(ds.license)}</dd>
+              <dt>Personal data</dt><dd>${e(personal)}</dd>
+            </dl>
+
+            <h2 class="mt-6" style="font-size:1.25rem">Schema preview</h2>
+            <p class="muted">A selection of fields with sample values. A complete data dictionary is provided with every delivery.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Field</th><th>Type</th><th>Example</th></tr></thead>
+                <tbody>${ds.fields.map((f) => `<tr><td><code>${e(f[0])}</code></td><td class="muted">${e(f[1])}</td><td>${e(f[2])}</td></tr>`).join("")}</tbody>
+              </table>
+            </div>
+          </div>
+
+          <aside class="card">
+            ${ds.apiPrice != null ? `
+              <span class="subtle mono">API ACCESS</span>
+              <p class="price" style="font-size:2.25rem;letter-spacing:-0.04em;margin:6px 0 2px">${U.money(ds.apiPrice)}<small> / request</small></p>
+              <p class="subtle">First ${window.DATUM_CONFIG.api.freeRequests.toLocaleString("en-US")} free requests every month · up to 30% off at volume</p>
+              <a class="btn btn-primary btn-block" href="${requestHref}&type=api">Get API access <i data-icon="arrow"></i></a>
+              <a class="subtle" style="display:block;text-align:center;margin-top:10px" href="pricing.html?dataset=${encodeURIComponent(ds.id)}#calculator">Estimate your monthly cost →</a>
+              <div style="height:1px;background:var(--border);margin:22px 0"></div>` : ""}
+            <span class="subtle mono">FULL DATASET</span>
+            <p class="price" style="font-size:1.5rem;letter-spacing:-0.03em;margin:6px 0 2px">${U.formatPrice(ds)}${ds.price != null ? `<small> / ${e(ds.priceUnit)}</small>` : ""}</p>
+            <p class="subtle">${ds.price != null ? "Complete dataset with licence agreement" : "Priced by volume and licence scope"}</p>
+            <div style="display:grid;gap:10px;margin:16px 0 24px">
+              ${ds.buyUrl ? `<a class="btn btn-primary btn-block" href="${e(ds.buyUrl)}" target="_blank" rel="noopener">Buy now</a>` : ""}
+              <a class="btn ${ds.buyUrl || ds.apiPrice != null ? "btn-ghost" : "btn-primary"} btn-block" href="${requestHref}">${ds.price != null ? "Buy full dataset" : "Request a quote"}</a>
+              <a class="btn btn-ghost btn-block" href="${requestHref}&sample=1">Request a sample</a>
+            </div>
+            <ul class="side-list">
+              <li>${I.check} Source and licence verified</li>
+              <li>${I.check} Data dictionary and lineage documentation</li>
+              <li>${I.check} Encrypted delivery</li>
+              <li>${I.check} DPA available on request</li>
+            </ul>
+          </aside>
+        </div>
+
+        <h2 class="mt-6" style="font-size:1.25rem">Related datasets</h2>
+        <div class="grid grid-3 mt-2">
+          ${window.DATUM_DATASETS.filter((d) => d.id !== ds.id).sort((a, b) => (b.category === ds.category) - (a.category === ds.category)).slice(0, 3).map((d) => U.datasetCard(d)).join("")}
+        </div>`;
+      app.querySelectorAll("[data-icon]").forEach((el) => (el.outerHTML = I[el.dataset.icon] || ""));
+    })();
+  </script>
+</body>
+</html>

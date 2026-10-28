@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datasets — Datum</title>
+  <meta name="description" content="Browse compliance-reviewed datasets: firmographics, pricing, geospatial, economic, consumer insights, AI training data and more.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <section class="page-head">
+      <div class="bg-aurora"></div>
+      <div class="container">
+        <span class="eyebrow">Dataset catalog</span>
+        <h1>Dataset catalog</h1>
+        <p class="lead">Access by API or full licence. Need something else? <a class="inline-link" href="request.html">Submit a request</a>.</p>
+      </div>
+    </section>
+
+    <section class="section-sm">
+      <div class="container">
+        <div class="toolbar">
+          <label class="search">
+            <span class="sr-only">Search datasets</span>
+            <i data-icon="search"></i>
+            <input type="search" id="q" placeholder="Search by dataset, field or source" autocomplete="off">
+          </label>
+          <label style="display:flex;align-items:center;gap:10px">
+            <span class="subtle">Sort</span>
+            <select id="sort" style="width:auto">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+        <p class="subtle" id="count" aria-live="polite"></p>
+        <div class="grid grid-3" id="results"></div>
+        <div class="empty" id="empty" hidden>
+          <h3>No datasets match your search</h3>
+          <p class="muted">We may still be able to source this data for you.</p>
+          <a class="btn btn-primary mt-2" id="empty-cta" href="request.html">Submit a request</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/datasets.js"></script>
+  <script>
+    (function () {
+      const U = window.DATUM_UTIL;
+      const all = window.DATUM_DATASETS;
+      const params = new URLSearchParams(location.search);
+      const state = { q: params.get("q") || "", category: params.get("category") || "All", sort: "featured" };
+
+      const q = document.getElementById("q");
+      const sort = document.getElementById("sort");
+      const chips = document.getElementById("chips");
+      q.value = state.q;
+
+      const cats = ["All", ...window.DATUM_CATEGORIES.map((c) => c.name)];
+      chips.innerHTML = cats.map((c) => `<button type="button" class="chip" data-cat="${U.escape(c)}">${U.escape(c)}</button>`).join("");
+
+      function render() {
+        const term = state.q.trim().toLowerCase();
+        let list = all.filter((d) => {
+          if (state.category !== "All" && d.category !== state.category) return false;
+          if (!term) return true;
+          const hay = [d.title, d.summary, d.description, d.category, d.source, d.coverage, ...d.formats, ...d.fields.map((f) => f[0])].join(" ").toLowerCase();
+          return term.split(/\s+/).every((t) => hay.includes(t));
+        });
+        const price = (d) => U.startingPrice(d);
+        if (state.sort === "price-asc") list.sort((a, b) => price(a) - price(b));
+        if (state.sort === "price-desc") list.sort((a, b) => (price(b) === Infinity ? -1 : price(b)) - (price(a) === Infinity ? -1 : price(a)));
+        if (state.sort === "name") list.sort((a, b) => a.title.localeCompare(b.title));
+
+        chips.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === state.category)));
+        document.getElementById("results").innerHTML = list.map((d) => U.datasetCard(d)).join("");
+        document.getElementById("count").textContent = `${list.length} dataset${list.length === 1 ? "" : "s"}`;
+        document.getElementById("empty").hidden = list.length > 0;
+        const ctaParams = new URLSearchParams();
+        if (state.q) ctaParams.set("topic", state.q);
+        if (state.category !== "All") ctaParams.set("category", state.category);
+        document.getElementById("empty-cta").href = "request.html" + (ctaParams.toString() ? "?" + ctaParams : "");
+
+        const url = new URLSearchParams();
+        if (state.q) url.set("q", state.q);
+        if (state.category !== "All") url.set("category", state.category);
+        history.replaceState(null, "", location.pathname + (url.toString() ? "?" + url : ""));
+      }
+
+      q.addEventListener("input", () => { state.q = q.value; render(); });
+      sort.addEventListener("change", () => { state.sort = sort.value; render(); });
+      chips.addEventListener("click", (e) => {
+        const b = e.target.closest(".chip");
+        if (b) { state.category = b.dataset.cat; render(); }
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
