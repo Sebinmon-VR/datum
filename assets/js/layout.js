@@ -21,10 +21,10 @@
 
   const NAV = [
     { href: "datasets.html", label: "Datasets" },
-    { href: "pricing.html", label: "Pricing" },
     { href: "index.html#api", label: "API" },
-    { href: "partners.html", label: "Partner with us" },
     { href: "compliance.html", label: "Compliance" },
+    { href: "partners.html", label: "Partner with us" },
+    { href: "pricing.html", label: "Pricing" },
   ];
 
   const page = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -40,7 +40,7 @@
           ${NAV.map((n) => `<li><a href="${n.href}"${n.href === page ? ' aria-current="page"' : ""}>${n.label}</a></li>`).join("")}
         </ul>
         <div class="nav-actions">
-          <a class="btn btn-ghost btn-sm" href="pricing.html">Get API key</a>
+          <a class="btn btn-ghost btn-sm" href="request.html?type=api">Get API key</a>
           <a class="btn btn-primary btn-sm" href="request.html">Request data</a>
           <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">${ICONS.menu}</button>
         </div>
@@ -131,25 +131,30 @@ window.DATUM_UTIL = {
       const [i, d] = n.toFixed(4).replace(/0+$/, "").split(".");
       return "$" + i + "." + d.padEnd(2, "0");
     }
-    if (n < 100) return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    // Keep cents on rates such as $149.70; round larger totals to whole dollars.
+    if (n < 100 || (n < 1000 && n % 1)) return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return "$" + Math.round(n).toLocaleString("en-US");
+  },
+  // Indicative API rates: approximate, without trailing .00 (≈ $5, ≈ $12.50).
+  approx(n) {
+    return "≈ " + this.money(n).replace(/\.00$/, "");
   },
   formatPrice(ds) {
     if (ds.price == null) return "Custom quote";
     return this.money(ds.price);
   },
-  // The lowest entry price for a dataset: per-request API rate if it has one, else the download price.
+  // The lowest entry price for a dataset: API rate per 200 records if it has one, else the licence price.
   startingPrice(ds) {
     return ds.apiPrice ?? ds.price ?? Infinity;
   },
-  // Monthly API cost after the free allowance, with tiered volume discounts.
-  apiCost(rate, requests) {
+  // Monthly API cost for a number of records delivered, after the free allowance, with tiered volume discounts.
+  apiCost(rate, records) {
     const api = window.DATUM_CONFIG.api;
-    let billable = Math.max(0, requests - api.freeRequests), from = 0, total = 0;
+    let billable = Math.max(0, records - api.freeRecords), from = 0, total = 0;
     for (const t of api.volumeTiers) {
       const n = Math.min(billable, t.upTo - from);
       if (n <= 0) break;
-      total += n * rate * (1 - t.discount);
+      total += (n / api.recordsPerUnit) * rate * (1 - t.discount);
       billable -= n;
       from = t.upTo;
     }
@@ -214,11 +219,14 @@ window.DATUM_UTIL = {
     }
     return bad.length === 0;
   },
-  datasetCard(ds) {
+  // opts.hidePrice shows delivery formats in place of the price (used on the home page).
+  datasetCard(ds, opts = {}) {
     const e = this.escape;
-    const price = ds.apiPrice != null
-      ? `<span class="price"><small>from</small> ${this.money(ds.apiPrice)} <small>/ request</small></span>`
-      : `<span class="price">${this.formatPrice(ds)}</span>`;
+    const price = opts.hidePrice
+      ? `<span class="subtle">${ds.formats.map(e).join(" · ")}</span>`
+      : ds.apiPrice != null
+        ? `<span class="price">${this.approx(ds.apiPrice)} <small>/ 200 records</small></span>`
+        : `<span class="price">${this.formatPrice(ds)}</span>`;
     return `
       <a class="card card-link ds-card" href="dataset.html?id=${encodeURIComponent(ds.id)}">
         <div class="ds-top">

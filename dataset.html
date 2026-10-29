@@ -80,9 +80,9 @@
 
           <aside class="card">
             ${ds.apiPrice != null ? `
-              <span class="subtle mono">API ACCESS</span>
-              <p class="price" style="font-size:2.25rem;letter-spacing:-0.04em;margin:6px 0 2px">${U.money(ds.apiPrice)}<small> / request</small></p>
-              <p class="subtle">First ${window.DATUM_CONFIG.api.freeRequests.toLocaleString("en-US")} free requests every month · up to 30% off at volume</p>
+              <span class="subtle mono">API ACCESS · INDICATIVE RATE</span>
+              <p class="price" style="font-size:2.25rem;letter-spacing:-0.04em;margin:6px 0 2px">${U.approx(ds.apiPrice)}<small> / 200 records</small></p>
+              <p class="subtle">Final rate confirmed in your order form · billed on records delivered · first ${window.DATUM_CONFIG.api.freeRecords.toLocaleString("en-US")} records each month included · up to 30% off at volume</p>
               <a class="btn btn-primary btn-block" href="${requestHref}&type=api">Get API access <i data-icon="arrow"></i></a>
               <a class="subtle" style="display:block;text-align:center;margin-top:10px" href="pricing.html?dataset=${encodeURIComponent(ds.id)}#calculator">Estimate your monthly cost →</a>
               <div style="height:1px;background:var(--border);margin:22px 0"></div>` : ""}

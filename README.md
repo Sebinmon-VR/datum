@@ -26,10 +26,10 @@ All business settings are in **`assets/js/config.js`**:
 
 - Brand name, contact email, company legal name and address.
 - `formEndpoint`: where form submissions are sent (see below).
-- `api.freeRequests` (currently 100 a month) and `api.volumeTiers` (15% off from 100K requests, 30% off from 1M).
+- `api.recordsPerUnit` (API usage is billed per 200 records), `api.freeRecords` (currently 1,000 a month) and `api.volumeTiers` (15% off from 100K records, 30% off from 1M).
 - `partnerRevenueShare` (currently 70%) and `partnerPayoutTerms`.
 
-Catalog listings live in **`assets/js/datasets.js`** and are currently **sample data**. Each dataset has an `apiPrice` (USD per request) and a `price` (full licence). Add a `buyUrl`, such as a Stripe Payment Link, to show a "Buy now" button.
+Catalog listings live in **`assets/js/datasets.js`** and are currently **sample data**. Each dataset has an `apiPrice` (USD per 200 records delivered by the API) and a `price` (full licence). Add a `buyUrl`, such as a Stripe Payment Link, to show a "Buy now" button.
 
 Design tokens (colours, fonts, radius) are at the top of **`assets/css/styles.css`**. The header and footer are in **`assets/js/layout.js`**.
 

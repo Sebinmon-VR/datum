@@ -20,11 +20,13 @@ window.DATUM_CONFIG = {
   partnerPayoutTerms: "monthly, net 30",
 
   // API pricing shown on dataset pages and the pricing calculator.
-  // Each dataset sets its own per-request rate (apiPrice in datasets.js);
-  // volume discounts apply to the part of monthly usage inside each tier.
+  // Usage is metered by records delivered and billed in units of recordsPerUnit.
+  // Each dataset sets its own rate per unit (apiPrice in datasets.js); volume
+  // discounts apply to the part of monthly usage inside each tier.
   api: {
     baseUrl: "https://api.datum.example/v1",
-    freeRequests: 100,
+    recordsPerUnit: 200,
+    freeRecords: 1000,
     volumeTiers: [
       { upTo: 100000, discount: 0 },
       { upTo: 1000000, discount: 0.15 },

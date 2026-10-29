@@ -21,12 +21,12 @@
     const mag = Math.pow(10, Math.floor(Math.log10(x)) - 1);
     return Math.round(x / mag) * mag;
   };
-  const requests = () => round2(Math.pow(10, 3 + (reqEl.value / 100) * 4));
-  const rate = () => round2(0.001 * Math.pow(100, rateEl.value / 100));
+  const records = () => round2(Math.pow(10, 3 + (reqEl.value / 100) * 4));
+  const rate = () => round2(Math.pow(100, rateEl.value / 100));
 
   function update() {
-    const req = requests(), r = rate(), dls = Number(dlEl.value), dlp = Math.max(0, Number(dlpEl.value) || 0);
-    const apiGross = req * r, dlGross = dls * dlp;
+    const req = records(), r = rate(), dls = Number(dlEl.value), dlp = Math.max(0, Number(dlpEl.value) || 0);
+    const apiGross = (req / cfg.api.recordsPerUnit) * r, dlGross = dls * dlp;
     const payout = (apiGross + dlGross) * share;
     reqEl.style.setProperty("--fill", reqEl.value + "%");
     rateEl.style.setProperty("--fill", rateEl.value + "%");

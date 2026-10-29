@@ -3,7 +3,7 @@
  *
  * Fields:
  *  id          unique slug used in URLs (dataset.html?id=...)
- *  apiPrice    USD per API request (the headline "from" price), or null if no API
+ *  apiPrice    USD per 200 records delivered by the API (the headline "from" rate), or null if no API
  *  price       full-dataset download price in USD, or null for "Custom quote"
  *  buyUrl      optional checkout link (e.g. a Stripe Payment Link). If set, the
  *              dataset page shows a "Buy now" button; otherwise buyers request it.
@@ -34,7 +34,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "Parquet", "API"],
     price: 1200,
     priceUnit: "country / year",
-    apiPrice: 0.008,
+    apiPrice: 40,
     license: "Commercial use, internal analytics",
     personalData: "none",
     source: "Public government business registries (open data licences)",
@@ -61,7 +61,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "Parquet", "S3"],
     price: 2500,
     priceUnit: "month",
-    apiPrice: 0.003,
+    apiPrice: 15,
     license: "Commercial use, no resale",
     personalData: "none",
     source: "Public product pages (ToS-reviewed), retailer feeds",
@@ -88,7 +88,7 @@ window.DATUM_DATASETS = [
     formats: ["GeoParquet", "CSV"],
     price: 3800,
     priceUnit: "region / year",
-    apiPrice: 0.015,
+    apiPrice: 75,
     license: "Commercial use, internal analytics",
     personalData: "aggregated",
     source: "Open map data + consented, aggregated mobility panels",
@@ -115,7 +115,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "JSON", "API"],
     price: 450,
     priceUnit: "month",
-    apiPrice: 0.001,
+    apiPrice: 5,
     license: "Commercial use, redistribution in derived works",
     personalData: "none",
     source: "Central banks, national statistics offices, IMF/World Bank open data",
@@ -142,7 +142,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "XLSX"],
     price: 900,
     priceUnit: "month",
-    apiPrice: 0.01,
+    apiPrice: 50,
     license: "Commercial use, publication with attribution",
     personalData: "aggregated",
     source: "Proprietary consented survey panel",
@@ -196,7 +196,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "Parquet"],
     price: 1600,
     priceUnit: "country / year",
-    apiPrice: 0.008,
+    apiPrice: 40,
     license: "Commercial use, internal analytics",
     personalData: "pseudonymised",
     source: "Public land and deed registries",
@@ -223,7 +223,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV"],
     price: 700,
     priceUnit: "month",
-    apiPrice: 0.004,
+    apiPrice: 20,
     license: "Research and commercial analytics",
     personalData: "aggregated",
     source: "Public-health agency releases",
@@ -250,7 +250,7 @@ window.DATUM_DATASETS = [
     formats: ["CSV", "Parquet", "API"],
     price: 1900,
     priceUnit: "month",
-    apiPrice: 0.005,
+    apiPrice: 25,
     license: "Commercial use, no resale",
     personalData: "none",
     source: "Public career pages and licensed job-board feeds",

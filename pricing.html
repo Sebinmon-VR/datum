@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pricing — Datum</title>
-  <meta name="description" content="Usage-based data pricing. 100 free API requests a month, then pay per request from $0.001, with automatic volume discounts.">
+  <meta name="description" content="Commercial terms for the Datum data API, full dataset licences and custom data engagements: published rates, billing basis and volume terms.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,58 +20,76 @@
       <div class="bg-aurora"></div>
       <div class="container">
         <span class="eyebrow">Pricing</span>
-        <h1>Transparent, <span class="gradient-text">usage-based</span> pricing.</h1>
-        <p class="lead">From $0.001 per request. First 100 requests free every month.</p>
+        <h1>Clear rates, <span class="gradient-text">defined</span> terms.</h1>
+        <p class="lead">Three commercial models, each with indicative rates, a written licence and the same compliance review. Final rates are confirmed in your order form.</p>
       </div>
     </section>
 
     <!-- Plans -->
     <section class="section-sm" id="plans">
       <div class="container plans">
-        <div class="card plan">
-          <h3>Free</h3>
-          <p class="muted mb-0">Evaluate any API dataset.</p>
-          <div class="amount">$0</div>
-          <div class="per">100 requests / month</div>
-          <ul>
-            <li><i data-icon="check"></i> Access to every API dataset</li>
-            <li><i data-icon="check"></i> Complimentary sample downloads</li>
-            <li><i data-icon="check"></i> 2 requests / second</li>
-            <li><i data-icon="check"></i> No payment details required</li>
-          </ul>
-          <a class="btn btn-ghost btn-block" href="request.html?type=api">Get a free API key</a>
-        </div>
-
         <div class="card plan featured">
-          <span class="badge">Most popular</span>
-          <h3>Pay as you go</h3>
-          <p class="muted mb-0">Usage-based billing, no commitment.</p>
-          <div class="amount">$0.001<small> / request</small></div>
-          <div class="per">starting rate; varies by dataset</div>
+          <span class="mono-tag">01 / DATA API</span>
+          <h3>Usage-based API</h3>
+          <p class="muted mb-0">Real-time access to any API dataset, billed on records delivered.</p>
+          <div class="amount">Metered</div>
+          <div class="per">indicative, from <span id="api-from">≈ $5</span> per 200 records</div>
+          <dl class="terms">
+            <div><dt>Billing</dt><dd>Monthly, in arrears</dd></div>
+            <div><dt>Commitment</dt><dd>None</dd></div>
+            <div><dt>Included</dt><dd>1,000 records per month</dd></div>
+          </dl>
           <ul>
-            <li><i data-icon="check"></i> 100 free requests every month</li>
-            <li><i data-icon="check"></i> 15% off from 100K, 30% off from 1M requests</li>
-            <li><i data-icon="check"></i> 25 requests / second</li>
+            <li><i data-icon="check"></i> Billed only on records returned</li>
+            <li><i data-icon="check"></i> 15% off above 100K, 30% off above 1M records</li>
+            <li><i data-icon="check"></i> Failed and empty queries are never billed</li>
             <li><i data-icon="check"></i> Usage alerts and spend caps</li>
-            <li><i data-icon="check"></i> Failed requests are never billed</li>
           </ul>
-          <a class="btn btn-primary btn-block" href="request.html?type=api">Get started <i data-icon="arrow"></i></a>
+          <a class="btn btn-primary btn-block" href="request.html?type=api">Request API access <i data-icon="arrow"></i></a>
         </div>
 
         <div class="card plan">
-          <h3>Bulk &amp; custom</h3>
-          <p class="muted mb-0">Complete datasets and custom sourcing.</p>
-          <div class="amount">$450<small> +</small></div>
-          <div class="per">dataset licences from; custom work quoted</div>
+          <span class="mono-tag">02 / DATASET LICENCE</span>
+          <h3>Full dataset licence</h3>
+          <p class="muted mb-0">The complete dataset, delivered for offline use.</p>
+          <div class="amount">Per dataset</div>
+          <div class="per">fixed fee; rates listed by dataset below</div>
+          <dl class="terms">
+            <div><dt>Billing</dt><dd>Invoiced per order</dd></div>
+            <div><dt>Term</dt><dd>Monthly or annual, by dataset</dd></div>
+            <div><dt>Delivery</dt><dd>CSV, Parquet, JSON or cloud</dd></div>
+          </dl>
           <ul>
-            <li><i data-icon="check"></i> Complete dataset licences</li>
-            <li><i data-icon="check"></i> Custom data collection</li>
-            <li><i data-icon="check"></i> Scheduled refreshes</li>
-            <li><i data-icon="check"></i> NDA, DPA and SLA</li>
-            <li><i data-icon="check"></i> Invoicing and dedicated support</li>
+            <li><i data-icon="check"></i> Licence agreement and data dictionary</li>
+            <li><i data-icon="check"></i> Sample available before purchase</li>
+            <li><i data-icon="check"></i> Optional scheduled refreshes</li>
+            <li><i data-icon="check"></i> DPA available on request</li>
           </ul>
-          <a class="btn btn-ghost btn-block" href="request.html">Contact sales</a>
+          <a class="btn btn-ghost btn-block" href="#rates-table">View licence rates</a>
         </div>
+
+        <div class="card plan">
+          <span class="mono-tag">03 / CUSTOM DATA</span>
+          <h3>Custom engagement</h3>
+          <p class="muted mb-0">Data sourced and delivered to your specification.</p>
+          <div class="amount">Quoted</div>
+          <div class="per">scoping and quotation at no charge</div>
+          <dl class="terms">
+            <div><dt>Billing</dt><dd>Per agreed quotation</dd></div>
+            <div><dt>Commitment</dt><dd>Agreed scope of work</dd></div>
+            <div><dt>Assessment</dt><dd>Within 48 hours</dd></div>
+          </dl>
+          <ul>
+            <li><i data-icon="check"></i> Compliance review before any collection</li>
+            <li><i data-icon="check"></i> Delivery by API, file transfer or both</li>
+            <li><i data-icon="check"></i> NDA, DPA and SLA available</li>
+            <li><i data-icon="check"></i> Dedicated account contact</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="request.html">Submit a request</a>
+        </div>
+      </div>
+      <div class="container">
+        <p class="subtle mt-4 center">All rates are in USD and exclude applicable taxes. For annual agreements or committed volume, <a class="inline-link" href="request.html">contact our team</a>.</p>
       </div>
     </section>
 
@@ -90,16 +108,16 @@
               <select id="calc-ds"></select>
             </div>
             <div class="field">
-              <div class="range-head"><label for="calc-req">API requests per month</label><output id="calc-req-out">50,000</output></div>
+              <div class="range-head"><label for="calc-req">Records delivered per month</label><output id="calc-req-out">50,000</output></div>
               <input type="range" id="calc-req" min="0" max="100" step="1" value="54">
-              <div class="ticks"><span>100</span><span>1K</span><span>10K</span><span>100K</span><span>1M</span><span>10M</span></div>
+              <div class="ticks"><span>1K</span><span>10K</span><span>100K</span><span>1M</span><span>10M</span></div>
             </div>
             <div class="table-wrap">
               <table class="tier-table">
                 <thead><tr><th>Monthly volume</th><th>Discount</th></tr></thead>
                 <tbody>
-                  <tr><td>First 100 requests</td><td style="color:var(--success)">Free</td></tr>
-                  <tr><td>101 – 100,000</td><td>List rate</td></tr>
+                  <tr><td>First 1,000 records</td><td style="color:var(--success)">Included</td></tr>
+                  <tr><td>1,001 – 100,000</td><td>List rate</td></tr>
                   <tr><td>100,001 – 1,000,000</td><td>15% off</td></tr>
                   <tr><td>Over 1,000,000</td><td>30% off</td></tr>
                 </tbody>
@@ -107,16 +125,17 @@
             </div>
           </div>
           <div class="calc-out">
-            <span class="subtle mono">ESTIMATED MONTHLY COST</span>
+            <span class="subtle mono">INDICATIVE MONTHLY ESTIMATE</span>
             <div class="total" id="calc-total">$0</div>
             <span class="subtle" id="calc-eff"></span>
             <div class="calc-rows">
-              <div><span>List rate</span><b id="calc-rate"></b></div>
-              <div><span>Free requests</span><b id="calc-free"></b></div>
+              <div><span>Indicative rate per 200 records</span><b id="calc-rate"></b></div>
+              <div><span>Included records</span><b id="calc-free"></b></div>
               <div><span>Volume savings</span><b id="calc-save"></b></div>
               <div><span>Full dataset licence</span><b id="calc-full"></b></div>
             </div>
-            <p class="subtle" id="calc-tip" style="margin-bottom:20px"></p>
+            <p class="subtle" id="calc-tip" style="margin-bottom:12px"></p>
+            <p class="subtle" style="margin-bottom:20px">Indicative only. Your rate is confirmed in your order form.</p>
             <a class="btn btn-primary btn-block" style="margin-top:auto" href="request.html?type=api">Get your API key</a>
           </div>
         </div>
@@ -124,19 +143,19 @@
     </section>
 
     <!-- Rates -->
-    <section class="section section-soft">
+    <section class="section section-soft" id="rates-table">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Rates by dataset</span>
-          <h2>Per-request and licence pricing</h2>
+          <h2>API and licence rates</h2>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Dataset</th><th>Category</th><th>API / request</th><th>Full licence</th></tr></thead>
+            <thead><tr><th>Dataset</th><th>Category</th><th>Indicative API rate / 200 records</th><th>Full licence</th></tr></thead>
             <tbody id="rates"></tbody>
           </table>
         </div>
-        <p class="subtle mt-2">Each request returns up to 100 records. All prices are in USD and exclude applicable taxes.</p>
+        <p class="subtle mt-2">API rates are indicative and may vary with volume, fields and coverage. Your rate is confirmed in your order form before any usage is billed. API usage is metered on records delivered and billed per 200 records. All prices are in USD and exclude applicable taxes.</p>
       </div>
     </section>
 
@@ -145,7 +164,7 @@
         <div class="cta">
           <span class="eyebrow">Data Partner Program</span>
           <h2>Partner with Datum</h2>
-          <p>Earn a share of every request and licence.</p>
+          <p>Earn a share of every record and licence sold.</p>
           <div class="btn-row">
             <a class="btn btn-primary btn-lg" href="partners.html">Become a partner <i data-icon="arrow"></i></a>
           </div>
@@ -164,23 +183,27 @@
       const U = window.DATUM_UTIL, e = U.escape, cfg = window.DATUM_CONFIG.api;
       const apiSets = window.DATUM_DATASETS.filter((d) => d.apiPrice != null);
 
+      // Plan card shows the live rate range from the catalog, so it never goes stale.
+      const apiRates = apiSets.map((d) => d.apiPrice);
+      document.getElementById("api-from").textContent = U.approx(Math.min(...apiRates));
+
       document.getElementById("rates").innerHTML = window.DATUM_DATASETS.map((d) => `
         <tr>
           <td><a href="dataset.html?id=${encodeURIComponent(d.id)}">${e(d.title)}</a></td>
           <td class="muted">${e(d.category)}</td>
-          <td class="mono">${d.apiPrice != null ? U.money(d.apiPrice) : '<span class="subtle">n/a</span>'}</td>
+          <td class="mono">${d.apiPrice != null ? U.approx(d.apiPrice) : '<span class="subtle">n/a</span>'}</td>
           <td class="mono">${d.price != null ? U.money(d.price) + ` <span class="subtle">/ ${e(d.priceUnit)}</span>` : "Custom quote"}</td>
         </tr>`).join("");
 
       const sel = document.getElementById("calc-ds");
       const range = document.getElementById("calc-req");
-      sel.innerHTML = apiSets.map((d) => `<option value="${e(d.id)}">${e(d.title)} — ${U.money(d.apiPrice)} / req</option>`).join("");
+      sel.innerHTML = apiSets.map((d) => `<option value="${e(d.id)}">${e(d.title)} — ${U.approx(d.apiPrice)} / 200 records</option>`).join("");
       const pre = new URLSearchParams(location.search).get("dataset");
       if (pre && apiSets.some((d) => d.id === pre)) sel.value = pre;
 
-      // Slider is logarithmic: 0 → 100, 100 → 10M requests, rounded to 2 significant figures.
-      function requests() {
-        const raw = Math.pow(10, 2 + (range.value / 100) * 5);
+      // Slider is logarithmic: 0 → 1K, 100 → 10M records, rounded to 2 significant figures.
+      function records() {
+        const raw = Math.pow(10, 3 + (range.value / 100) * 4);
         const mag = Math.pow(10, Math.floor(Math.log10(raw)) - 1);
         return Math.round(raw / mag) * mag;
       }
@@ -188,21 +211,21 @@
 
       function update() {
         const ds = apiSets.find((d) => d.id === sel.value);
-        const req = requests();
+        const req = records();
         const cost = U.apiCost(ds.apiPrice, req);
-        const listCost = Math.max(0, req - cfg.freeRequests) * ds.apiPrice;
+        const listCost = (Math.max(0, req - cfg.freeRecords) / cfg.recordsPerUnit) * ds.apiPrice;
         range.style.setProperty("--fill", range.value + "%");
         document.getElementById("calc-req-out").textContent = n(req);
-        document.getElementById("calc-total").textContent = U.money(cost);
-        document.getElementById("calc-eff").textContent = cost > 0 ? `≈ ${U.money(cost / req)} effective per request` : "Covered by the complimentary allowance";
-        document.getElementById("calc-rate").textContent = U.money(ds.apiPrice);
-        document.getElementById("calc-free").textContent = n(Math.min(req, cfg.freeRequests));
+        document.getElementById("calc-total").textContent = cost > 0 ? U.approx(cost) : U.money(cost);
+        document.getElementById("calc-eff").textContent = cost > 0 ? `≈ ${U.money((cost / req) * cfg.recordsPerUnit)} effective per 200 records` : "Covered by the complimentary allowance";
+        document.getElementById("calc-rate").textContent = U.approx(ds.apiPrice);
+        document.getElementById("calc-free").textContent = n(Math.min(req, cfg.freeRecords));
         document.getElementById("calc-save").textContent = U.money(listCost - cost);
         document.getElementById("calc-full").textContent = ds.price != null ? `${U.money(ds.price)} / ${ds.priceUnit}` : "Quote";
         document.getElementById("calc-tip").textContent =
-          ds.price != null && cost > ds.price / 12
+          ds.price != null && cost > (/year/.test(ds.priceUnit) ? ds.price / 12 : ds.price)
             ? "At this volume, a full dataset licence may be more cost-effective. Contact our team for a quotation."
-            : "You pay only for the requests you make, with no minimum commitment.";
+            : "You pay only for the records you receive, with no minimum commitment.";
       }
       sel.addEventListener("change", update);
       range.addEventListener("input", update);
